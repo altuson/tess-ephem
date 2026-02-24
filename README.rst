@@ -118,6 +118,8 @@ the ``sector`` parameter:
 When passing the ``sector`` parameter, the ``time_step`` is by default 1 day. 
 This can be changed as follows:
 
+.. code-block:: python
+
     >>> ephem("Sedna", sector=70, time_step=0.1)
                sector  camera  ccd       column          row     tdb-ut  ...       dec       vmag  hmag  sun_distance  obs_distance  sto_angle
     time                                                                 ...                                                                  

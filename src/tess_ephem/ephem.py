@@ -69,8 +69,8 @@ class TessEphem:
         self._deltaf = CubicSpline(eph["datetime_jd"], eph["delta"])
         # Delta-T (TDB - UT)
         self._deltat = CubicSpline(eph["datetime_jd"], eph["TDB-UT"])
-        # Phase angle
-        self._phif = CubicSpline(eph["datetime_jd"], eph["alpha_true"])
+        # Sun-Target-Observer (~phase) angle
+        self._alphaf = CubicSpline(eph["datetime_jd"], eph["alpha"])
         # Motion expressed in TESS pixels per hour
         motion = (
             np.hypot(eph["RA_rate"].quantity, eph["DEC_rate"].quantity)
@@ -105,7 +105,7 @@ class TessEphem:
             H = np.full(len(time.jd), np.nan)
         r = self._rf(time.jd)
         delta = self._deltaf(time.jd)
-        phi = self._phif(time.jd)
+        sto_angle = self._alphaf(time.jd)
         motion = self._motionf(time.jd)
         deltat = self._deltat(time.jd)
         return DataFrame(
@@ -119,7 +119,7 @@ class TessEphem:
                 "hmag": H,
                 "sun_distance": r,
                 "obs_distance": delta,
-                "phase_angle": phi,
+                "sto_angle": sto_angle,
             }
         )
 
@@ -288,7 +288,7 @@ def _get_horizons_ephem(
     step: str = "12H",
     id_type: str = "smallbody",
     location: str = "@TESS",
-    quantities: str = "1,3,9,19,20,30,43",
+    quantities: str = "1,3,9,19,20,24,30",
 ):
     """Returns JPL Horizons ephemeris.
 

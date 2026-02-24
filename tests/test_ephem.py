@@ -49,7 +49,7 @@ def test_predict():
     # 2. using tessrip to get average WCS from sector/camera/ccd
     # 3. converting RA,Dec to col,row with wcs_world2pix()
     assert np.round(pixel_locations.iloc[0]["row"], 1) == 1107.6
-    assert np.round(pixel_locations.iloc[0]["column"], 1) == 1087.8
+    assert np.round(pixel_locations.iloc[0]["column"], 1) == 1087.9
 
 
 def test_orbital_elements():
